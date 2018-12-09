@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<!-- 演示SQL映射文件 -->
+<sqlMap namespace="Score">
+<typeAlias alias="dto" type="org.g4studio.core.metatype.impl.BaseDto" />
+
+<select id="queryScoreInit" parameterClass="map" resultClass="dto">
+SELECT sid, sname, ssex,scomputer, senglish
+FROM SCORE
+</select>
+<select id="queryScoreByName" parameterClass="map" resultClass="dto">
+SELECT sid, sname, ssex,scomputer, senglish
+   FROM SCORE  
+      <dynamic prepend="WHERE">
+			<isNotEmpty prepend="AND" property="name"> 
+				sname like '%$name$%'
+			</isNotEmpty>
+     </dynamic>
+</select>
+<insert id="insertScore" parameterClass="dto">
+INSERT INTO SCORE
+(sname, ssex, scomputer,senglish)
+VALUES
+(#sname#, #ssex#, #scomputer#,#senglish#)
+</insert>
+<update id="updateScore" parameterClass="dto">
+update SCORE
+<dynamic prepend="WHERE"> 
+			<isNotNull prepend="," property="sname">
+	         sname = #sname#
+			</isNotNull>
+			<isNotNull prepend="," property="ssex">
+	         ssex = #ssex#
+			</isNotNull>
+			<isNotNull prepend="," property="scomputer">
+	         scomputer = #scomputer#
+			</isNotNull>
+			<isNotNull prepend="," property="senglish">
+	         senglish = #senglish#
+			</isNotNull>
+			 WHERE sid = #sid#						
+		</dynamic> 
+
+</update>
+
+
+
+
+
+
+</sqlMap>
