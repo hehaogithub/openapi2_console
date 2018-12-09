@@ -1,5 +1,5 @@
 /**
- * 表格综合示例
+ * 学生成绩显示js
  * 
  * @author XiongChun
  * @since 2010-10-20
